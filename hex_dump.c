@@ -44,7 +44,7 @@ print_word(FILE *dest, void *buf, size_t len) {
    int word_len = 0;
 
    for (i = 0; i < len; i++) {
-      fprintf(dest, "%02x", *(u_int8_t*)buf++);
+      fprintf(dest, "%02x", *(uint8_t *)buf++);
       word_len += 2;
    } 
 
@@ -57,7 +57,7 @@ static void
 print_line(FILE *dest, void *buf, size_t len, size_t addr, char *addr_fmt) {
    size_t words = len / BYTES_PER_WORD;
    size_t last_word = len % BYTES_PER_WORD;
-   long *pos = buf;
+   char *pos = buf;
    size_t i;
    uint32_t line_pos = 0;
 
@@ -65,15 +65,14 @@ print_line(FILE *dest, void *buf, size_t len, size_t addr, char *addr_fmt) {
 
    for (i = 0; i < words; i++) {
       line_pos += print_word(dest, pos, BYTES_PER_WORD);
-      pos++;
+      pos += BYTES_PER_WORD;
    }
 
    if (last_word) {
       line_pos += print_word(dest, pos, last_word);
    }
 
-   fprintf(dest, "%s", &spc_line[line_pos]);
-   fprintf(dest, "| ");
+   fprintf(dest, "%s| ", &spc_line[line_pos]);
 
    for (i = 0; i < len; i++) {
       char c = ((char*)buf)[i];
