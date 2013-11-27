@@ -6,7 +6,7 @@ CC      = gcc
 AR		  = ar
 
 SRC     = hex_dump.c stack.c list.c olist.c htab.c
-HDR	  = ${SRC:.c=.h}
+HDR     = ${SRC:.c=.h}
 OBJ     = ${SRC:.c=.o}
 PIC_OBJ = ${SRC:.c=.lo}
 
